@@ -272,7 +272,7 @@ async function copyIp() {
 
   try {
     await navigator.clipboard.writeText(ip);
-    showToast('Скопировано!');
+    showToast('Салам братуха!');
   } catch {
     const textarea = document.createElement('textarea');
     textarea.value = ip;
@@ -282,7 +282,7 @@ async function copyIp() {
     textarea.select();
     document.execCommand('copy');
     document.body.removeChild(textarea);
-    showToast('Скопировано!');
+    showToast('Салам братуха!');
   }
 }
 
