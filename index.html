@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AmnesiaIP — быстрая и безопасная проверка вашего IP-адреса">
+  <title>AmnesiaIP — Проверка IP-адреса</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-gradient" aria-hidden="true"></div>
+
+  <main class="page">
+    <section class="hero animate-fade-in">
+      <div class="hero__logo" aria-hidden="true">
+        <span class="hero__dot"></span>
+      </div>
+      <h1 class="hero__title">AmnesiaIP</h1>
+      <p class="hero__subtitle">Быстрая и безопасная проверка вашего IP-адреса</p>
+    </section>
+
+    <section class="card animate-fade-in animate-delay-1" aria-labelledby="card-title">
+      <div class="card__header">
+        <h2 id="card-title" class="card__title">Информация об IP</h2>
+        <div class="card__status" role="status" aria-live="polite">
+          <span class="spinner" id="loading-spinner" hidden aria-hidden="true"></span>
+          <span class="status-text" id="status-text">Загрузка данных…</span>
+        </div>
+      </div>
+
+      <div class="error-banner" id="error-banner" hidden role="alert">
+        <p id="error-message">Не удалось получить данные</p>
+        <button type="button" class="btn btn--ghost btn--sm" id="retry-btn">Повторить</button>
+      </div>
+
+      <ul class="data-list" id="data-list" aria-live="polite">
+        <li class="data-row" data-field="ipv4">
+          <span class="data-row__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </span>
+          <span class="data-row__label">IPv4</span>
+          <span class="data-row__value" id="val-ipv4">—</span>
+        </li>
+        <li class="data-row" data-field="ipv6">
+          <span class="data-row__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </span>
+          <span class="data-row__label">IPv6</span>
+          <span class="data-row__value data-row__value--muted" id="val-ipv6">—</span>
+        </li>
+        <li class="data-row" data-field="country">
+          <span class="data-row__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.5-7-10a7 7 0 1 1 14 0c0 5.5-7 10-7 10z"/><circle cx="12" cy="11" r="2.5"/></svg>
+          </span>
+          <span class="data-row__label">Страна</span>
+          <span class="data-row__value" id="val-country">—</span>
+        </li>
+        <li class="data-row" data-field="city">
+          <span class="data-row__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+          </span>
+          <span class="data-row__label">Город</span>
+          <span class="data-row__value" id="val-city">—</span>
+        </li>
+        <li class="data-row" data-field="region">
+          <span class="data-row__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </span>
+          <span class="data-row__label">Регион</span>
+          <span class="data-row__value" id="val-region">—</span>
+        </li>
+        <li class="data-row" data-field="isp">
+          <span class="data-row__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/></svg>
+          </span>
+          <span class="data-row__label">Провайдер</span>
+          <span class="data-row__value" id="val-isp">—</span>
+        </li>
+        <li class="data-row" data-field="asn">
+          <span class="data-row__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></svg>
+          </span>
+          <span class="data-row__label">ASN</span>
+          <span class="data-row__value" id="val-asn">—</span>
+        </li>
+        <li class="data-row" data-field="org">
+          <span class="data-row__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 7v1a3 3 0 0 0 6 0V7M9 21V8M15 21V8M15 7v1a3 3 0 0 0 6 0V7M21 21V8"/></svg>
+          </span>
+          <span class="data-row__label">Организация</span>
+          <span class="data-row__value" id="val-org">—</span>
+        </li>
+        <li class="data-row" data-field="coords">
+          <span class="data-row__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
+          </span>
+          <span class="data-row__label">Координаты</span>
+          <span class="data-row__value" id="val-coords">—</span>
+        </li>
+        <li class="data-row" data-field="timezone">
+          <span class="data-row__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </span>
+          <span class="data-row__label">Часовой пояс</span>
+          <span class="data-row__value" id="val-timezone">—</span>
+        </li>
+        <li class="data-row" data-field="useragent">
+          <span class="data-row__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </span>
+          <span class="data-row__label">User-Agent</span>
+          <span class="data-row__value data-row__value--wrap" id="val-useragent">—</span>
+        </li>
+        <li class="data-row" data-field="connection">
+          <span class="data-row__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </span>
+          <span class="data-row__label">Тип подключения</span>
+          <span class="data-row__value" id="val-connection">—</span>
+        </li>
+      </ul>
+
+      <div class="card__actions">
+        <button type="button" class="btn btn--primary" id="copy-btn" aria-label="Скопировать IP-адрес">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Скопировать IP
+        </button>
+        <button type="button" class="btn btn--secondary" id="refresh-btn" aria-label="Обновить информацию">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          Обновить информацию
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden>Скопировано!</div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
