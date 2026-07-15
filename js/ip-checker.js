@@ -16,10 +16,6 @@ const state = {
   isLoading: false,
 };
 
-// ---------------------------------------------------------------------------
-// DOM refs
-// ---------------------------------------------------------------------------
-
 const els = {
   dataList: document.getElementById('data-list'),
   spinner: document.getElementById('loading-spinner'),
@@ -47,14 +43,9 @@ const els = {
   },
 };
 
-// ---------------------------------------------------------------------------
-// Utilities
-// ---------------------------------------------------------------------------
-
 function fetchWithTimeout(url, options = {}) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
-
   return fetch(url, { ...options, signal: controller.signal }).finally(() =>
     clearTimeout(timer)
   );
@@ -108,10 +99,6 @@ function hideError() {
   els.errorBanner.hidden = true;
 }
 
-// ---------------------------------------------------------------------------
-// API
-// ---------------------------------------------------------------------------
-
 async function fetchFromIpWhoIs() {
   const res = await fetchWithTimeout(API.primary);
   if (!res.ok) throw new Error(`ipwho.is HTTP ${res.status}`);
@@ -152,9 +139,7 @@ async function fetchIpv6() {
 function normalizeIpWhoIs(data) {
   return {
     ipv4: isIpv6(data.ip) ? null : data.ip,
-    country: data.flag?.emoji
-      ? `${data.flag.emoji} ${data.country}`
-      : data.country,
+    country: data.flag?.emoji ? `${data.flag.emoji} ${data.country}` : data.country,
     city: data.city,
     region: data.region,
     isp: data.connection?.isp,
@@ -184,23 +169,12 @@ function normalizeIpApiCo(data) {
 function getClientInfo() {
   const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   let connectionType = 'Не определено';
-
   if (conn) {
     const parts = [conn.effectiveType, conn.type].filter(Boolean);
-    if (parts.length) {
-      connectionType = parts.join(' / ');
-    }
+    if (parts.length) connectionType = parts.join(' / ');
   }
-
-  return {
-    userAgent: navigator.userAgent,
-    connectionType,
-  };
+  return { userAgent: navigator.userAgent, connectionType };
 }
-
-// ---------------------------------------------------------------------------
-// Render
-// ---------------------------------------------------------------------------
 
 function renderData(geo, ipv6, client) {
   if (geo.ipv4) {
@@ -209,13 +183,11 @@ function renderData(geo, ipv6, client) {
   } else if (geo.ipv4 === null && !isIpv6(state.ipv4)) {
     setField('ipv4', 'Не определено');
   }
-
   if (ipv6) {
     setField('ipv6', ipv6);
   } else {
     setField('ipv6', 'Не доступен', { muted: true });
   }
-
   setField('country', geo.country);
   setField('city', geo.city);
   setField('region', geo.region);
@@ -228,20 +200,14 @@ function renderData(geo, ipv6, client) {
   setField('connection', client.connectionType);
 }
 
-// ---------------------------------------------------------------------------
-// Actions
-// ---------------------------------------------------------------------------
-
 async function loadData() {
   if (!navigator.onLine) {
     showError('Нет подключения к интернету. Проверьте сеть и попробуйте снова.');
     setLoading(false);
     return;
   }
-
   hideError();
   setLoading(true);
-
   try {
     const [geo, ipv6] = await Promise.all([fetchIpData(), fetchIpv6()]);
     const client = getClientInfo();
@@ -269,7 +235,6 @@ async function refresh() {
 async function copyIp() {
   const ip = state.ipv4 || els.fields.ipv4.textContent;
   if (!ip || ip === '—' || ip === 'Не определено') return;
-
   try {
     await navigator.clipboard.writeText(ip);
     showToast('Скопировано!');
@@ -292,29 +257,21 @@ function showToast(message) {
   els.toast.textContent = message;
   els.toast.hidden = false;
   els.toast.classList.add('is-visible');
-
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => {
     els.toast.classList.remove('is-visible');
-    setTimeout(() => {
-      els.toast.hidden = true;
-    }, 300);
+    setTimeout(() => { els.toast.hidden = true; }, 300);
   }, 2500);
 }
 
-// ---------------------------------------------------------------------------
-// Init
-// ---------------------------------------------------------------------------
-
 function init() {
+  if (!els.copyBtn) return;
   els.copyBtn.addEventListener('click', copyIp);
   els.refreshBtn.addEventListener('click', refresh);
   els.retryBtn.addEventListener('click', refresh);
-
   window.addEventListener('online', () => {
     if (els.errorBanner.hidden === false) refresh();
   });
-
   loadData();
 }
 

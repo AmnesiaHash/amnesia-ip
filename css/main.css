@@ -1,70 +1,5 @@
 /* ==========================================================================
-   AmnesiaIP — Design System
-   ========================================================================== */
-
-:root {
-  --purple-700: #6D28D9;
-  --purple-600: #7C3AED;
-  --purple-500: #8B5CF6;
-  --purple-400: #A78BFA;
-  --purple-100: #EDE9FE;
-  --purple-50: #F5F3FF;
-  --bg: #ffffff;
-  --text: #1E1B4B;
-  --text-muted: #6B7280;
-  --text-light: #9CA3AF;
-  --shadow: 0 20px 60px rgba(109, 40, 217, 0.15);
-  --shadow-sm: 0 4px 20px rgba(109, 40, 217, 0.1);
-  --shadow-hover: 0 24px 70px rgba(109, 40, 217, 0.22);
-  --radius-lg: 24px;
-  --radius-md: 16px;
-  --radius-sm: 12px;
-  --glass-bg: rgba(255, 255, 255, 0.72);
-  --glass-border: rgba(255, 255, 255, 0.85);
-  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Reset & Base
-   ========================================================================== */
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  font-size: 16px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  color: var(--text);
-  background: var(--bg);
-  min-height: 100vh;
-  line-height: 1.5;
-  overflow-x: hidden;
-}
-
-/* Background Gradient
-   ========================================================================== */
-
-.bg-gradient {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% -10%, var(--purple-50) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 50% at 80% 60%, rgba(139, 92, 246, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 10% 80%, rgba(109, 40, 217, 0.06) 0%, transparent 55%),
-    linear-gradient(180deg, var(--purple-50) 0%, var(--bg) 45%);
-}
-
-/* Page Layout
+   AmnesiaIP — Main Page (IP Checker)
    ========================================================================== */
 
 .page {
@@ -78,9 +13,6 @@ body {
   max-width: 720px;
   margin: 0 auto;
 }
-
-/* Hero
-   ========================================================================== */
 
 .hero {
   text-align: center;
@@ -129,9 +61,6 @@ body {
   margin: 0 auto;
 }
 
-/* Glass Card
-   ========================================================================== */
-
 .card {
   width: 100%;
   background: var(--glass-bg);
@@ -172,9 +101,6 @@ body {
   color: var(--text-muted);
 }
 
-/* Spinner
-   ========================================================================== */
-
 .spinner {
   display: inline-block;
   width: 16px;
@@ -185,13 +111,6 @@ body {
   animation: spin 0.7s linear infinite;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Error Banner
-   ========================================================================== */
-
 .error-banner {
   display: flex;
   align-items: center;
@@ -199,19 +118,16 @@ body {
   gap: 1rem;
   padding: 0.875rem 1rem;
   margin-bottom: 1rem;
-  background: rgba(239, 68, 68, 0.08);
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
   border-radius: var(--radius-sm);
-  color: #B91C1C;
+  color: var(--error);
   font-size: 0.875rem;
 }
 
 .error-banner[hidden] {
   display: none !important;
 }
-
-/* Data List
-   ========================================================================== */
 
 .data-list {
   list-style: none;
@@ -291,9 +207,6 @@ body {
   line-height: 1.4;
 }
 
-/* Loading skeleton shimmer
-   ========================================================================== */
-
 .data-list.is-loading .data-row__value {
   color: transparent;
   background: linear-gradient(90deg, var(--purple-50) 25%, var(--purple-100) 50%, var(--purple-50) 75%);
@@ -305,14 +218,6 @@ body {
   display: inline-block;
 }
 
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* Card Actions
-   ========================================================================== */
-
 .card__actions {
   display: flex;
   gap: 0.75rem;
@@ -321,156 +226,18 @@ body {
   border-top: 1px solid rgba(109, 40, 217, 0.08);
 }
 
-/* Buttons
-   ========================================================================== */
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.25rem;
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: 600;
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+.card__actions .btn {
   flex: 1;
 }
-
-.btn svg {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-}
-
-.btn:focus-visible {
-  outline: 2px solid var(--purple-500);
-  outline-offset: 2px;
-}
-
-.btn--primary {
-  background: linear-gradient(135deg, var(--purple-700), var(--purple-500));
-  color: #fff;
-  box-shadow: 0 4px 16px rgba(109, 40, 217, 0.35);
-}
-
-.btn--primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(109, 40, 217, 0.45);
-}
-
-.btn--primary:active {
-  transform: translateY(0);
-}
-
-.btn--secondary {
-  background: rgba(109, 40, 217, 0.08);
-  color: var(--purple-700);
-  border: 1px solid rgba(109, 40, 217, 0.15);
-}
-
-.btn--secondary:hover {
-  background: rgba(109, 40, 217, 0.14);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
-}
-
-.btn--ghost {
-  background: transparent;
-  color: #B91C1C;
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  flex: 0;
-  white-space: nowrap;
-}
-
-.btn--ghost:hover {
-  background: rgba(239, 68, 68, 0.08);
-}
-
-.btn--sm {
-  padding: 0.5rem 0.875rem;
-  font-size: 0.8125rem;
-}
-
-.btn:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-  transform: none !important;
-}
-
-/* Refresh spin animation
-   ========================================================================== */
 
 .btn--refreshing svg {
   animation: spin 0.7s linear infinite;
 }
 
-/* Toast
-   ========================================================================== */
-
-.toast {
-  position: fixed;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%) translateY(0);
-  background: var(--text);
-  color: #fff;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius-md);
-  font-size: 0.875rem;
-  font-weight: 500;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  z-index: 100;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.toast[hidden] {
-  display: block !important;
-  opacity: 0;
-  transform: translateX(-50%) translateY(12px);
-  pointer-events: none;
-}
-
-.toast.is-visible {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-/* Animations
-   ========================================================================== */
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeInUp 0.6s ease both;
-}
-
-.animate-delay-1 {
-  animation-delay: 0.15s;
-}
-
-/* Card refresh fade
-   ========================================================================== */
-
 .card.is-refreshing {
   opacity: 0.7;
   transition: opacity 0.3s ease;
 }
-
-/* Responsive
-   ========================================================================== */
 
 @media (max-width: 768px) {
   .page {

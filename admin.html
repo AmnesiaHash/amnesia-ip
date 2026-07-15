@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AmnesiaIP Admin — панель администратора">
+  <title>AmnesiaIP Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="bg-gradient" aria-hidden="true"></div>
+
+  <div class="admin-layout">
+    <aside class="admin-sidebar" aria-label="Навигация администратора">
+      <div class="admin-sidebar__brand">
+        <div class="brand">
+          <span class="brand__dot brand__dot--sm" aria-hidden="true"></span>
+          <span class="brand__name">AmnesiaIP Admin</span>
+        </div>
+        <p class="admin-sidebar__brand-sub">Панель управления</p>
+      </div>
+
+      <div class="admin-sidebar__user">
+        <div class="admin-user-card">
+          <div class="admin-user-card__avatar" id="admin-avatar" aria-hidden="true">A</div>
+          <div class="admin-user-card__info">
+            <div class="admin-user-card__name" id="admin-name">—</div>
+            <div class="admin-user-card__role">Администратор</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-sidebar__logout">
+        <button type="button" class="btn btn--secondary" id="logout-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+          Выход
+        </button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <h1 class="admin-main__title">Панель администратора</h1>
+
+      <section class="stats-grid" id="stats-grid" aria-label="Статистика">
+        <article class="stat-card glass-card">
+          <div class="stat-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="stat-card__value" id="stat-total-users">—</div>
+          <div class="stat-card__label">Количество пользователей</div>
+        </article>
+        <article class="stat-card glass-card">
+          <div class="stat-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div class="stat-card__value" id="stat-online">—</div>
+          <div class="stat-card__label">Онлайн</div>
+        </article>
+        <article class="stat-card glass-card">
+          <div class="stat-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="stat-card__value" id="stat-admins">—</div>
+          <div class="stat-card__label">Администраторы</div>
+        </article>
+        <article class="stat-card glass-card">
+          <div class="stat-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="stat-card__value" id="stat-messages">—</div>
+          <div class="stat-card__label">Отправленные сообщения</div>
+        </article>
+      </section>
+
+      <div class="admin-grid">
+        <section class="admin-panel glass-card" aria-labelledby="chat-event-title">
+          <h2 class="admin-panel__title" id="chat-event-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Chat Event
+          </h2>
+          <form class="chat-form" id="chat-form">
+            <textarea class="form-input" id="chat-input" placeholder="Введите сообщение для всех пользователей…" rows="4" aria-label="Текст сообщения"></textarea>
+            <button type="submit" class="btn btn--primary">Отправить сообщение</button>
+          </form>
+          <ul class="chat-history" id="chat-history" aria-live="polite" aria-label="История сообщений"></ul>
+        </section>
+
+        <section class="admin-panel glass-card" aria-labelledby="online-users-title">
+          <h2 class="admin-panel__title" id="online-users-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Пользователи онлайн
+          </h2>
+          <ul class="users-list" id="users-list"></ul>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- PM Modal -->
+  <div class="modal-overlay" id="pm-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pm-title">
+    <div class="modal glass-card">
+      <button type="button" class="modal__close" data-modal-close aria-label="Закрыть">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="modal__header">
+        <h2 class="modal__title" id="pm-title">Личное сообщение</h2>
+        <p class="modal__subtitle" id="pm-recipient">—</p>
+      </div>
+      <form class="modal__form" id="pm-form">
+        <div class="form-group">
+          <label class="form-label" for="pm-message">Сообщение</label>
+          <textarea class="form-input" id="pm-message" rows="4" placeholder="Введите текст сообщения…" required></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary btn--block">Отправить</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>
